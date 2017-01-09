@@ -57,6 +57,7 @@
           <file file_name="../Inc/stm32f3xx_it.h" />
           <file file_name="../Inc/tim.h" />
           <file file_name="../Inc/usart.h" />
+          <file file_name="E:/workspace/keil/nucleo-f303k8-i2c-fram/Inc/fram_utils.h" />
         </folder>
         <folder Name="src">
           <file file_name="../Src/gpio.c" />
@@ -69,6 +70,7 @@
           </file>
           <file file_name="../Src/tim.c" />
           <file file_name="../Src/usart.c" />
+          <file file_name="../Src/fram_utils.c" />
         </folder>
       </folder>
     </folder>

@@ -40,6 +40,7 @@
 
 /* USER CODE BEGIN Includes */
 #include <string.h>
+#include "fram_utils.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -51,7 +52,7 @@ uint32_t count = 0;
 #define BUFFER_SIZE     16
 uint8_t buffer[BUFFER_SIZE];
 uint8_t txbuff[BUFFER_SIZE];
-char message[] = "hello vladimir monpetit hamas...";
+char message[] = "hello vladimir monpetit hamas... (CINEMeister Inc.)";
 char rxbuff[128];
 
 /* USER CODE END PV */
@@ -62,7 +63,6 @@ void Error_Handler(void);
 
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
-__STATIC_INLINE HAL_StatusTypeDef fram_is_ready(void);
 
 /* USER CODE END PFP */
 
@@ -95,16 +95,17 @@ int main(void)
 
     /* USER CODE BEGIN 2 */
     HAL_TIM_Base_Start_IT(&htim7);
+    fram_init(FRAM_ADDR);
 
     if (fram_is_ready() == HAL_OK) {
         /*
         for (int i = 0; i < BUFFER_SIZE; i++)
-            txbuff[i] = (i + 3);
-        HAL_I2C_Mem_Write(&hi2c1, FRAM_ADDR, STORAGE_BASE_ADDR, I2C_MEMADD_SIZE_16BIT, txbuff, BUFFER_SIZE, 1000);        
-        HAL_I2C_Mem_Write(&hi2c1, FRAM_ADDR, (STORAGE_BASE_ADDR + 256), I2C_MEMADD_SIZE_16BIT, (uint8_t*)message, strlen(message), 1000);
+            txbuff[i] = (i + 7);
+        fram_write_buffer(0, txbuff, BUFFER_SIZE);
+        fram_write_buffer(256, (uint8_t*)message, strlen(message));
         */
     }
-    
+
     /* USER CODE END 2 */
 
     /* Infinite loop */
@@ -115,26 +116,30 @@ int main(void)
         /* USER CODE BEGIN 3 */
         if (timer7_flag) {
             printf("count = %u\r\n", count++);
-            
-            HAL_StatusTypeDef status = HAL_I2C_IsDeviceReady(&hi2c1, FRAM_ADDR, 3, 1000);
+
+            HAL_StatusTypeDef status = fram_is_ready();
             printf("I2C Status [device ready] = %d\r\n", status);
-            
-            status = HAL_I2C_Mem_Read(&hi2c1, FRAM_ADDR, STORAGE_BASE_ADDR, I2C_MEMADD_SIZE_16BIT, buffer, BUFFER_SIZE, 1000);
+
+            status = fram_read_buffer(0, buffer, BUFFER_SIZE);
             printf("I2C Status [mem read] = %d\r\n", status);
-            
+
             if (status == HAL_OK) {
                 for (int i = 0; i < BUFFER_SIZE; i++) {
                     printf("0x%02x ", buffer[i]);
                 }
                 printf("\r\n");
             }
-            
-            status = HAL_I2C_Mem_Read(&hi2c1, FRAM_ADDR, (STORAGE_BASE_ADDR + 256), I2C_MEMADD_SIZE_16BIT, (uint8_t*)rxbuff, strlen(message), 1000);
+
+            status = fram_read_buffer(256, (uint8_t*)rxbuff, strlen(message));
             if (status == HAL_OK) {
                 rxbuff[strlen(message)] = 0;
                 printf("memory = [%s]\r\n", rxbuff);
             }
-            
+
+            for (int i = 0; i < BUFFER_SIZE; i++) {
+                printf("offset [%d] ---> %u\r\n", i, fram_read(i));
+            }
+
             timer7_flag = 0;
         }
 
@@ -196,11 +201,6 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-
-__STATIC_INLINE HAL_StatusTypeDef fram_is_ready(void)
-{
-    return HAL_I2C_IsDeviceReady(&hi2c1, FRAM_ADDR, 3, 1000);
-}
 
 
 /* USER CODE END 4 */
