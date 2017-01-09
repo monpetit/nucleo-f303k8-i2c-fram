@@ -38,3 +38,8 @@ MDK-ARM/startup_stm32f303x8.lst
 *.bak
 *.orig
 *~
+*.swp
+*.emSession
+*.jlink
+*.plist
+SES/Output/
