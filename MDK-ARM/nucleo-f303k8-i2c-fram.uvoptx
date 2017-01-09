@@ -78,6 +78,18 @@
         <IsCurrentTarget>1</IsCurrentTarget>
       </OPTFL>
       <CpuCode>0</CpuCode>
+      <Books>
+        <Book>
+          <Number>0</Number>
+          <Title>STM32F3-Discovery Web Page (STM32F3-Discovery)</Title>
+          <Path>http://www.st.com/web/catalog/tools/FM116/SC959/SS1532/PF254044</Path>
+        </Book>
+        <Book>
+          <Number>1</Number>
+          <Title>STM32303C-EVAL Web Page (STM32303C-EVAL)</Title>
+          <Path>http://www.st.com/web/en/catalog/tools/PF252996</Path>
+        </Book>
+      </Books>
       <DebugOpt>
         <uSim>0</uSim>
         <uTrg>1</uTrg>
@@ -101,7 +113,7 @@
         <sRunDeb>0</sRunDeb>
         <sLrtime>0</sLrtime>
         <bEvRecOn>1</bEvRecOn>
-        <nTsel>7</nTsel>
+        <nTsel>3</nTsel>
         <sDll></sDll>
         <sDllPa></sDllPa>
         <sDlgDll></sDlgDll>
@@ -115,6 +127,11 @@
         <pMon>Segger\JL2CM3.dll</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>
+        <SetRegEntry>
+          <Number>0</Number>
+          <Key>UL2CM3</Key>
+          <Name>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC1000 -FN1 -FF0STM32F3xx_256 -FS08000000 -FL010000 -FP0($$Device:STM32F303K8$Flash\STM32F3xx_256.FLM))</Name>
+        </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
           <Key>ARMRTXEVENTFLAGS</Key>
@@ -293,7 +310,7 @@
 
   <Group>
     <GroupName>Drivers/STM32F3xx_HAL_Driver</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -513,7 +530,7 @@
 
   <Group>
     <GroupName>Drivers/CMSIS</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
